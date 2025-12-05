@@ -33,13 +33,13 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-indigo-900 p-4 sm:p-8">
-      <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-10 animate-fade-in">
-          <h1 className="text-5xl sm:text-6xl font-extrabold bg-gradient-to-r from-purple-400 via-indigo-400 to-blue-400 bg-clip-text text-transparent mb-3">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-indigo-900 p-4 sm:p-8 overflow-x-hidden">
+      <div className="max-w-5xl mx-auto w-full">
+        <div className="text-center mb-10 animate-fade-in px-2 sm:px-4">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold bg-gradient-to-r from-purple-400 via-indigo-400 to-blue-400 bg-clip-text text-transparent mb-3 leading-tight break-words hyphens-auto">
             Image Management System
           </h1>
-          <p className="text-gray-300 text-lg">Upload, search, and manage your images effortlessly</p>
+          <p className="text-gray-300 text-base sm:text-lg px-2">Upload, search, and manage your images effortlessly</p>
         </div>
 
         <MessageAlert
