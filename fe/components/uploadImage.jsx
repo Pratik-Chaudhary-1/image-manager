@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Upload } from "lucide-react";
+import Loader from "./loader";
 
 const UploadImage = ({ api, onSuccess, onError }) => {
   const [uploadName, setUploadName] = useState("");
@@ -75,7 +76,12 @@ const UploadImage = ({ api, onSuccess, onError }) => {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6">
+    <div className="bg-white rounded-xl shadow-lg p-6 relative">
+      {loading && (
+        <div className="absolute inset-0 bg-white bg-opacity-90 rounded-xl flex items-center justify-center z-10">
+          <Loader size="lg" text="Uploading image..." />
+        </div>
+      )}
       <h2 className="text-2xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
         <Upload className="w-6 h-6" />
         Upload New Image
@@ -129,9 +135,16 @@ const UploadImage = ({ api, onSuccess, onError }) => {
         <button
           onClick={handleUpload}
           disabled={loading || !selectedFile || !uploadName.trim()}
-          className="w-full px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors font-semibold"
+          className="w-full px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors font-semibold flex items-center justify-center gap-2"
         >
-          {loading ? "Uploading..." : "Upload Image"}
+          {loading ? (
+            <>
+              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              Uploading...
+            </>
+          ) : (
+            "Upload Image"
+          )}
         </button>
       </div>
     </div>

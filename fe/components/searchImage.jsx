@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Search } from "lucide-react";
+import Loader from "./loader";
 
 const SearchImage = ({ api, onSuccess, onError, refreshTrigger }) => {
   const [searchName, setSearchName] = useState("");
@@ -51,7 +52,12 @@ const SearchImage = ({ api, onSuccess, onError, refreshTrigger }) => {
   }, [refreshTrigger]);
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
+    <div className="bg-white rounded-xl shadow-lg p-6 mb-8 relative">
+      {loading && (
+        <div className="absolute inset-0 bg-white bg-opacity-90 rounded-xl flex items-center justify-center z-10">
+          <Loader size="lg" text="Searching for image..." />
+        </div>
+      )}
       <h2 className="text-2xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
         <Search className="w-6 h-6" />
         Search Image
@@ -69,9 +75,16 @@ const SearchImage = ({ api, onSuccess, onError, refreshTrigger }) => {
         <button
           onClick={handleSearch}
           disabled={loading}
-          className="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:bg-gray-400 transition-colors font-medium"
+          className="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:bg-gray-400 transition-colors font-medium flex items-center justify-center gap-2 min-w-[100px]"
         >
-          {loading ? "Searching..." : "Search"}
+          {loading ? (
+            <>
+              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              Searching...
+            </>
+          ) : (
+            "Search"
+          )}
         </button>
       </div>
 
