@@ -10,9 +10,9 @@ const Loader = ({ size = "md", text = "" }) => {
   return (
     <div className="flex flex-col items-center justify-center gap-2">
       <div
-        className={`${sizeClasses[size]} border-4 border-gray-200 border-t-indigo-600 rounded-full animate-spin`}
+        className={`${sizeClasses[size]} border-4 border-gray-700 border-t-indigo-400 rounded-full animate-spin`}
       ></div>
-      {text && <p className="text-sm text-gray-600">{text}</p>}
+      {text && <p className="text-sm text-gray-300">{text}</p>}
     </div>
   );
 };
