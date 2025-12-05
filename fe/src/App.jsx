@@ -1,4 +1,5 @@
 import UploadImage from "../components/uploadImage";
+import SearchImage from "../components/searchImage";
 
 function App() {
   const [message, setMessage] = useState({ type: "", text: "" });
@@ -35,6 +36,11 @@ function App() {
         <h1 className="text-4xl font-bold text-center text-indigo-900 mb-8">
           Image Management System
         </h1>
+
+        <MessageAlert
+          message={message}
+          onClose={() => setMessage({ type: "", text: "" })}
+        ></MessageAlert>
 
         <SearchImage
           apiBase={API_BASE}

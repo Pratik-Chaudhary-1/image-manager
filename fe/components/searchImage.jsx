@@ -1,3 +1,6 @@
+import React, { useState, useEffect } from "react";
+import { Search } from "lucide-react";
+
 const SearchImage = ({ api, onSucess, onError, refreshTrigger }) => {
   const [searchName, setSearchName] = useState("");
   const [imageUrl, setImageUrl] = useState("");
