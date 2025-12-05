@@ -1,5 +1,7 @@
+import { useState } from "react";
 import UploadImage from "../components/uploadImage";
 import SearchImage from "../components/searchImage";
+import MessageAlert from "../components/message";
 
 function App() {
   const [message, setMessage] = useState({ type: "", text: "" });
@@ -43,7 +45,7 @@ function App() {
         ></MessageAlert>
 
         <SearchImage
-          apiBase={API_BASE}
+          api={URL}
           onSuccess={handleSearchSuccess}
           onError={handleError}
           refreshTrigger={refreshTrigger}

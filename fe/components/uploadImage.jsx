@@ -1,8 +1,8 @@
-import { React, useState } from "react";
+import React, { useState } from "react";
 import { Upload } from "lucide-react";
 
 const UploadImage = ({ api, onSuccess, onError }) => {
-  const [uploaName, setUploadName] = useState("");
+  const [uploadName, setUploadName] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [preview, setPreview] = useState(null);
@@ -18,6 +18,7 @@ const UploadImage = ({ api, onSuccess, onError }) => {
       }
 
       if (file.size > 5 * 1024 * 1024) {
+        onError("File size too large. Maximum size is 5MB.");
         setSelectedFile(null);
         setPreview(null);
         return;
@@ -35,7 +36,7 @@ const UploadImage = ({ api, onSuccess, onError }) => {
 
   const handleUpload = async () => {
     if (!selectedFile) {
-      onError("Pleae select a file to upload");
+      onError("Please select a file to upload");
       return;
     }
 
@@ -64,7 +65,7 @@ const UploadImage = ({ api, onSuccess, onError }) => {
         setUploadName("");
         document.getElementById("fileInput").value = "";
       } else {
-        onError(data.error || "upload failed");
+        onError(data.message || "upload failed");
       }
     } catch (err) {
       onError("Failed to upload image. Make sure the server is running.");
@@ -76,7 +77,8 @@ const UploadImage = ({ api, onSuccess, onError }) => {
   return (
     <div className="bg-white rounded-xl shadow-lg p-6">
       <h2 className="text-2xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
-        <Upload className="w-6 h-6">Upload New Image</Upload>
+        <Upload className="w-6 h-6" />
+        Upload New Image
       </h2>
 
       <div className="space-y-4">
@@ -87,7 +89,7 @@ const UploadImage = ({ api, onSuccess, onError }) => {
           <input
             type="text"
             placeholder="Enter character name (tom, jerry, dog)"
-            value={uploaName}
+            value={uploadName}
             onChange={(e) => setUploadName(e.target.value)}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
           ></input>
@@ -102,7 +104,7 @@ const UploadImage = ({ api, onSuccess, onError }) => {
             type="file"
             accept="image/*"
             onChange={handleFileChange}
-            className="w-full px-4 py-y border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
           ></input>
 
           {selectedFile && (

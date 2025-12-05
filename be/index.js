@@ -3,13 +3,16 @@ import multer from "multer";
 import fs from "fs";
 import cors from "cors";
 import path from "path";
-import { error } from "console";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -41,7 +44,7 @@ const fileFilter = (req, file, cb) => {
   const extName = allowedTypes.test(
     path.extname(file.originalname).toLowerCase()
   );
-  const mimeType = allowedTypes.test(file.mimeType);
+  const mimeType = allowedTypes.test(file.mimetype);
 
   if (extName && mimeType) {
     cb(null, true);
@@ -101,7 +104,7 @@ app.get("/api/getImage", (req, res) => {
 });
 
 //post route
-app.post("/api/upload", upload.single("image"), (rew, res) => {
+app.post("/api/upload", upload.single("image"), (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({
@@ -123,7 +126,7 @@ app.post("/api/upload", upload.single("image"), (rew, res) => {
     res.json({
       success: true,
       message: `image for ${name} uploaded successfully`,
-      fileName: req.file.fileName,
+      fileName: req.file.filename,
       path: req.file.path,
     });
   } catch (e) {
@@ -131,7 +134,7 @@ app.post("/api/upload", upload.single("image"), (rew, res) => {
     res.status(500).json({
       success: false,
       message: "error file uploading",
-      error: error.message,
+      error: e.message,
     });
   }
 });
@@ -148,7 +151,7 @@ app.use((error, req, res, next) => {
 
   res.status(500).json({
     success: false,
-    message: error.messgae,
+    message: error.message,
   });
 });
 

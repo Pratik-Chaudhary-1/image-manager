@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Search } from "lucide-react";
 
-const SearchImage = ({ api, onSucess, onError, refreshTrigger }) => {
+const SearchImage = ({ api, onSuccess, onError, refreshTrigger }) => {
   const [searchName, setSearchName] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [loading, setLoading] = useState(false);
@@ -16,15 +16,15 @@ const SearchImage = ({ api, onSucess, onError, refreshTrigger }) => {
 
     try {
       const response = await fetch(
-        `${apiBase}/api/getImage?name=${searchName}`
+        `${api}/api/getImage?name=${searchName}`
       );
       const data = await response.json();
 
-      if (response.ok && data.image) {
-        setImageUrl(`${apiBase}/${data.image}?t=${Date.now()}`);
+      if (response.ok && data.success && data.imagePath) {
+        setImageUrl(`${api}/${data.imagePath}?t=${Date.now()}`);
         onSuccess(searchName);
       } else {
-        onError(data.error || "Image not found");
+        onError(data.message || "Image not found");
         setImageUrl("");
       }
     } catch (error) {
@@ -47,6 +47,7 @@ const SearchImage = ({ api, onSucess, onError, refreshTrigger }) => {
     if (refreshTrigger > 0 && searchName) {
       handleSearch();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refreshTrigger]);
 
   return (
