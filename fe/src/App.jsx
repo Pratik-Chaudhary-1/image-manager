@@ -15,6 +15,13 @@ function App() {
     setRefreshTrigger((prev) => prev + 1);
   };
 
+  const handleSearchSuccess = (characterName) => {
+    setMessage({
+      type: "success",
+      text: `Found image for ${characterName}`,
+    });
+  };
+
   const handleError = (errorMessage) => {
     setMessage({
       type: "error",
@@ -28,6 +35,13 @@ function App() {
         <h1 className="text-4xl font-bold text-center text-indigo-900 mb-8">
           Image Management System
         </h1>
+
+        <SearchImage
+          apiBase={API_BASE}
+          onSuccess={handleSearchSuccess}
+          onError={handleError}
+          refreshTrigger={refreshTrigger}
+        ></SearchImage>
 
         <UploadImage
           api={URL}
