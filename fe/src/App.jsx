@@ -1,10 +1,39 @@
+import UploadImage from "../components/uploadImage";
+
 function App() {
+  const [message, setMessage] = useState({ type: "", text: "" });
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
+
+  const URL = "http://localhost:3000";
+
+  const handleUploadSuccess = (characterName) => {
+    setMessage({
+      type: "success",
+      text: `Successfully uploaded image for ${characterName}! Search to see new image.`,
+    });
+
+    setRefreshTrigger((prev) => prev + 1);
+  };
+
+  const handleError = (errorMessage) => {
+    setMessage({
+      type: "error",
+      text: errorMessage,
+    });
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl font-bold text-center text-indigo-900 mb-8">
           Image Management System
         </h1>
+
+        <UploadImage
+          api={URL}
+          onSuccess={handleUploadSuccess}
+          onError={handleError}
+        ></UploadImage>
 
         <div className="mt-6 p-4 bg-blue-50 border-blue-200 rounded-lg">
           <h3 className="font-semibold text-blue-900 mb-2">Instructions:</h3>
